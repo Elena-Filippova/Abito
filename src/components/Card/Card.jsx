@@ -1,23 +1,24 @@
+import { Link } from 'react-router-dom'
 import './Card.css'
 
-export const Card = ({ title, price, address, date, image }) => {
+export const Card = ({ id, title, price, address, date, image }) => {
   return (
-    <a href="./product.html" className="content-main__list-item flex">
-      <div class="content-main__list-item--image flex">
+    <Link to={`/product/${id}`} className="content-main__list-item flex">
+      <div className="content-main__list-item--image flex">
         <img src={image} alt={title} />
       </div>
-      <h5 class="content-main__list-item--title">
+      <h5 className="content-main__list-item--title">
         {title}
       </h5>
-      <span class="content-main__list-item--price">
+      <span className="content-main__list-item--price">
         {price}
       </span>
-      <span class="content-main__list-item--address">
+      <span className="content-main__list-item--address">
         {address}
       </span>
-      <span class="content-main__list-item--date">
+      <span className="content-main__list-item--date">
         {date}
       </span>
-    </a>
+    </Link>
   );
 }

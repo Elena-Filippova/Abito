@@ -1,40 +1,44 @@
-import { useOutletContext } from 'react-router-dom';
-import { Card } from '../components/Card/Card'
+import { useParams, useOutletContext } from "react-router-dom";
 
-export const Home = () => {
+export const Product = () => {
   const { products } = useOutletContext()
+  const { id } = useParams();
+  const findProduct = products.find((p) => p.id === +id)
 
   return (
     <section className="content">
       <div className="container">
         <div className="content-box flex">
-          <div className="content-main">
-            <h2 className="content-main__title">Рекомендации для вас</h2>
-            <div className="content-main__list flex">
-              {
-                products.map(card => (
-                  <Card 
-                    key={card.id}
-                    id={card.id}
-                    title={card.title}
-                    price={card.price}
-                    address={card.address}
-                    date={card.date}
-                    image={card.image}
-                  />
-                ))
-              }
+          {findProduct ? (
+            <div className="content-product flex">
+              <div className="content-product__left">
+                <h2 className="content-product__left-title">
+                  {findProduct.title}
+                </h2>
+                <img src={findProduct.image} alt="product" />
+                <p className="content-product__left-text">
+                  {findProduct.description}
+                </p>
+              </div>
+              <div className="content-product__right">
+                <p className="content-product__right-price">
+                  {findProduct.price}
+                </p>
+                <button className="btn btn-primary btn-large">
+                  Показать телефон
+                </button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <h2>Такого товара не существует</h2>
+          )}
           <div className="content-side">
             <h3 className="content-side__title">Сервисы и услуги</h3>
             <div className="content-side__box">
               <div className="content-side__list flex">
                 <div className="content-side__list-item flex">
-                  <img src="./image/truck.svg" alt="Truck" />
-                  <h5 className="content-side__list-item--title">
-                    Доставка
-                  </h5>
+                  <img src="/image/truck.svg" alt="Truck" />
+                  <h5 className="content-side__list-item--title">Доставка</h5>
                   <p className="content-side__list-item--text">
                     Проверка при получении и возможность бесплатно вернуть
                     товар
@@ -42,9 +46,7 @@ export const Home = () => {
                 </div>
                 <div className="content-side__list-item flex">
                   <img src="/image/car.svg" alt="Car" />
-                  <h5 className="content-side__list-item--title">
-                    Автотека
-                  </h5>
+                  <h5 className="content-side__list-item--title">Автотека</h5>
                   <p className="content-side__list-item--text">
                     Отчёт с историей авто: пробег, владельцы, сведения о
                     залоге, ДТП и ремонтах
